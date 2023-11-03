@@ -1,0 +1,24 @@
+//given two positive integers n and m . Now calculate the value of n to the power m using recursion.Write a C++ program for it.	
+#include <iostream>
+
+// Function to calculate n to the power of m using recursion
+int power(int n, int m) {
+    if (m == 0) {
+        return 1;
+    }
+    return n * power(n, m - 1);
+}
+
+int main() {
+    int n, m;
+    std::cout << "Enter the base (n): ";
+    std::cin >> n;
+    std::cout << "Enter the exponent (m): ";
+    std::cin >> m;
+
+    int result = power(n, m);
+    std::cout << n << " raised to the power " << m << " is: " << result << std::endl;
+
+    return 0;
+}
+
