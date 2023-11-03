@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int n, m;
+    cin >> n >> m;
+
+    // Create an adjacency list representation
+    vector<vector<int>> adj(n);
+
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        cin >> u >> v;
+
+        // Add edges to the adjacency list
+        adj[u].push_back(v);
+        adj[v].push_back(u); // For undirected graph, add both directions
+    }
+
+    // Print the adjacency list
+    for (int i = 0; i < n; i++) {
+        cout << "Node " << i << " is connected to: ";
+        for (int neighbor : adj[i]) {
+            cout << neighbor << " ";
+        }
+        cout << endl;
+    }
+
+    return 0;
+}
+
