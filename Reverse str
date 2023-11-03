@@ -1,0 +1,24 @@
+#include <iostream>
+using namespace std;
+
+string reverse(string str) {
+    // Base case
+    if (str.empty()) {
+        return "";
+    }
+
+    // Recursive case
+    char firstChar = str[0];
+    string restOfString = str.substr(1);
+    return reverse(restOfString) + firstChar;
+}
+
+int main() {
+    string input = "Hello, World!";
+    string reversed = reverse(input);
+    cout << "Original string: " << input << endl;
+    cout << "Reversed string: " << reversed << endl;
+
+    return 0;
+}
+
