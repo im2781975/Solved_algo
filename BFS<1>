@@ -1,0 +1,54 @@
+//To determine whether nodes 2 and 6 are connected in the graph using Breadth-First Search (BFS), you can use the following C++ code. First, you need to modify your code to create an adjacency list to represent the graph. Then, you can perform BFS from node 2 and check if node 6 is reachable.
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int n, m;
+    cin >> n >> m;
+
+    // Create an adjacency list to represent the graph
+    vector<vector<int>> adj(n + 1);
+
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        cin >> u >> v;
+        adj[u].push_back(v);
+        adj[v].push_back(u); // Assuming the graph is undirected
+    }
+
+    int startNode = 2; // Starting node for BFS
+    int targetNode = 6; // Node to check connectivity with
+
+    // BFS to check if node 2 and 6 are connected
+    vector<bool> visited(n + 1, false);
+    queue<int> q;
+    q.push(startNode);
+    visited[startNode] = true;
+
+    bool connected = false;
+    while (!q.empty()) {
+        int currentNode = q.front();
+        q.pop();
+
+        if (currentNode == targetNode) {
+            connected = true;
+            break;
+        }
+
+        for (int neighbor : adj[currentNode]) {
+            if (!visited[neighbor]) {
+                q.push(neighbor);
+                visited[neighbor] = true;
+            }
+        }
+    }
+
+    if (connected) {
+        cout << "Nodes 2 and 6 are connected.";
+    } else {
+        cout << "Nodes 2 and 6 are not connected.";
+    }
+
+    return 0;
+}
+
