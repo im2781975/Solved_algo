@@ -1,0 +1,38 @@
+//Take the following graph as input and determine whether nodes 2 and 6 are connected using DFS.
+#include <bits/stdc++.h>
+using namespace std;
+
+vector<int> adj[100005]; // Assuming a maximum of 100,005 nodes
+
+void dfs(int v, vector<bool> &visited) {
+    visited[v] = true;
+    for (int u : adj[v]) {
+        if (!visited[u]) {
+            dfs(u, visited);
+        }
+    }
+}
+
+int main() {
+    int n, m;
+    cin >> n >> m;
+
+    for (int i = 0; i < m; i++) {
+        int u, v;
+        cin >> u >> v;
+        adj[u].push_back(v);
+        adj[v].push_back(u); // Assuming the graph is undirected
+    }
+
+    vector<bool> visited(n + 1, false);
+    dfs(1, visited); // Start DFS from node 1 (or any other starting node)
+
+    if (visited[2] && visited[6]) {
+        cout << "Nodes 2 and 6 are connected." << endl;
+    } else {
+        cout << "Nodes 2 and 6 are not connected." << endl;
+    }
+
+    return 0;
+}
+
