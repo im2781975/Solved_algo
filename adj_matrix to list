@@ -1,0 +1,64 @@
+#include <iostream>
+#include <vector>
+
+// Function to convert an adjacency matrix to an adjacency list
+std::vector<std::vector<int>> matrixToList(const std::vector<std::vector<int>>& matrix) {
+    int V = matrix.size();
+    std::vector<std::vector<int>> adjList(V);
+
+    for (int i = 0; i < V; ++i) {
+        for (int j = 0; j < V; ++j) {
+            if (matrix[i][j] == 1) {
+                adjList[i].push_back(j);
+                adjList[j].push_back(i);  // Since the graph is undirected
+            }
+        }
+    }
+
+    return adjList;
+}
+
+// Function to convert an adjacency list to an adjacency matrix
+std::vector<std::vector<int>> listToMatrix(const std::vector<std::vector<int>>& adjList) {
+    int V = adjList.size();
+    std::vector<std::vector<int>> matrix(V, std::vector<int>(V, 0));
+
+    for (int i = 0; i < V; ++i) {
+        for (int j : adjList[i]) {
+            matrix[i][j] = 1;
+            matrix[j][i] = 1;  // Since the graph is undirected
+        }
+    }
+
+    return matrix;
+}
+
+int main() {
+    std::vector<std::vector<int>> adjacencyMatrix = {
+        {0, 1, 1, 0, 0},
+        {1, 0, 1, 1, 0},
+        {1, 1, 0, 0, 1},
+        {0, 1, 0, 0, 1},
+        {0, 0, 1, 1, 0}
+    };
+
+    // Convert adjacency matrix to adjacency list
+    std::vector<std::vector<int>> adjacencyList = matrixToList(adjacencyMatrix);
+
+    // Convert adjacency list back to adjacency matrix
+    std::vector<std::vector<int>> newAdjacencyMatrix = listToMatrix(adjacencyList);
+
+    // Compare the original and new adjacency matrices
+    for (int i = 0; i < adjacencyMatrix.size(); ++i) {
+        for (int j = 0; j < adjacencyMatrix[i].size(); ++j) {
+            if (adjacencyMatrix[i][j] != newAdjacencyMatrix[i][j]) {
+                std::cout << "Conversion error!" << std::endl;
+                return 1;
+            }
+        }
+    }
+
+    std::cout << "Conversion successful!" << std::endl;
+
+    return 0;
+}
