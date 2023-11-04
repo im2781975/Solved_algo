@@ -1,0 +1,41 @@
+// You have k types of coins with amounts of n. You have to make a target with these coins.
+#include <bits/stdc++.h>
+using namespace std;
+
+const int N = 60;
+const int M = 101;
+const int MOD = 1e9 + 7;
+int dp[N][M];
+int coin[N], limit[N];
+
+int main() {
+    int n, trg;
+    cin >> n >> trg;
+    for (int i = 1; i <= n; i++) {
+        cin >> coin[i];
+    }
+    for (int i = 1; i <= n; i++) {
+        cin >> limit[i];
+    }
+    for(int i = 0; i <= n; i++) {
+        for(int j = 0; j <= trg; j++) {
+            dp[i][j] = 0;
+        }
+    }
+    dp[0][0] = 1;
+    for (int i = 1; i <= n; i++) {
+        for (int j = 0; j <= trg; j++) {
+            dp[i][j] = dp[i - 1][j]; // This line was missing a semicolon
+            for (int l = 1; l <= limit[i]; l++) {
+                if (j < l * coin[i]) {
+                    break;
+                }
+                int ret = dp[i - 1][j - l * coin[i]];
+                dp[i][j] = (dp[i][j] + ret) % MOD;
+            }
+        }
+    }
+    cout << dp[n][trg];
+    return 0;
+}
+
